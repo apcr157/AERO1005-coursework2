@@ -148,7 +148,7 @@ for i = 1:duration
     end
 end
 totalAcquisitionTime = toc;
-disp(['Data acquisition complete, total time. ', num2str(totalAcquisitionTime), ' 秒']);
+disp(['Data acquisition complete, total time. ', num2str(totalAcquisitionTime), ' second']);
 
 % 1b: Calculation of statistics
 % Ignore NaN values for calculations
@@ -157,9 +157,9 @@ maxTemp = max(temperatureData, [], 'omitnan');
 avgTemp = mean(temperatureData, 'omitnan');
 
 disp('Statistical results.');
-disp(['Minimum temperature. ', num2str(minTemp, '%.2f'), ' °C']);
-disp(['最高温度：. ', num2str(maxTemp, '%.2f'), ' °C']);
-disp(['Average temperature. ', num2str(avgTemp, '%.2f'), ' °C']);
+disp(['Minimum temperature: ', num2str(minTemp, '%.2f'), ' °C']);
+disp(['Maximum temperature:  ', num2str(maxTemp, '%.2f'), ' °C']);
+disp(['Average temperature: ', num2str(avgTemp, '%.2f'), ' °C']);
 
 % 1c: Final drawing
 % You can update the final graphic or create a new one.
@@ -201,7 +201,7 @@ end
 screenOutput{end+1} = sprintf('Max temp\t%.2f C', maxTemp);
 screenOutput{end+1} = sprintf('Min temp\t%.2f C', minTemp);
 screenOutput{end+1} = sprintf('Average temp\t%.2f C', avgTemp);
-screenOutput{end+1} = sprintf('\n'); % 空行
+screenOutput{end+1} = sprintf('\n'); % Blank line
 
 % Output end message
 screenOutput{end+1} = sprintf('Data logging terminated');
@@ -237,10 +237,42 @@ disp('End of Task 1');
 % END OF TASK 1
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
+disp('start Task 2');
+clear a
+try
+    a = arduino('COM3', 'Uno'); 
+    disp('Arduino Connection Successful');
+catch ME
+    disp('Error: unable to connect to Arduino.');
+    disp(ME.message)
+    return; % 
+end
 
-% Insert answers here
+% Define pin number 
+analogPin = 'A0';  
+greenPin  = 'D9';   
+yellowPin = 'D10';  
+redPin    = 'D11';  
 
 
+%Calling the Temperature Monitor Function/
+disp('Start temperature monitoring system (press Ctrl+C to stop).....');
+try
+    temp_monitor(a, analogPin, greenPin, yellowPin, redPin);
+catch ME
+    disp('The monitor function is interrupted or has an error.');
+    % Make sure the LED is off
+     writeDigitalPin(a, greenPin, 0);
+     writeDigitalPin(a, yellowPin, 0);
+     writeDigitalPin(a, redPin, 0);
+     disp('All LEDs are off.');
+    
+end
+
+% Cleanup (usually handled inside a function or on interrupt) --
+% clear a; % is not cleared here, as the function may need it
+disp('Task 2 ends (or is interrupted)');
+% END OF TASK 2 
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [25 MARKS]
 
 % Insert answers here
