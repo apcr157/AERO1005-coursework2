@@ -321,4 +321,44 @@ disp('Task 3 terminated (or interrupted)');
 
 %% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
 
-% Insert answers here
+%
+% This coursework provided a valuable opportunity to apply MATLAB knowledge
+% learned in lectures to a practical hardware control problem. Overall, I managed
+% to implement the core functionalities, but encountered several challenges along the way.
+%
+% Challenges:
+% The primary challenge was managing the noise in the temperature sensor readings.
+% Initially, the values fluctuated significantly, affecting the stability of the
+% LED indicators and the accuracy of the rate-of-change calculation. Researching
+% potential causes led me to implement both a hardware solution (adding a
+% decoupling capacitor) and a software one (multi-sampling averaging), which
+% noticeably improved the stability. Understanding the `onCleanup` function and
+% ensuring proper resource de-allocation upon interruption (Ctrl+C) also required
+% careful attention.
+%
+% Strengths:
+% I believe I was effective in breaking down the tasks and implementing the
+% required features incrementally. I focused on writing readable code, incorporating
+% comments to explain the logic in key sections. Implementing the live data
+% plotting using MATLAB's graphics functions was also a part I handled relatively well.
+%
+% Limitations:
+% A key limitation is the simplistic nature of the temperature prediction in Task 3,
+% which uses a linear extrapolation based only on the recent trend. This might not
+% be reliable for predicting temperatures during more complex thermal events.
+% Furthermore, the error handling is quite basic; for example, it doesn't specifically
+% address scenarios like the Arduino becoming disconnected mid-operation. The physical
+% wiring, while functional, could also be neater.
+%
+% Future Improvements:
+% If time permitted, exploring more advanced filtering algorithms, such as a moving
+% average or perhaps even an exponential smoothing filter, could yield smoother
+% temperature data and potentially a more reliable rate calculation. Another enhancement
+% could be to develop a basic Graphical User Interface (GUI) to display the
+% temperature, status, and graph, making it more intuitive than command-line output.
+% Refactoring some of the repeated code (like LED control logic) into helper
+% functions could also improve code organisation.
+%
+% In summary, this project enhanced my programming, hardware interfacing, and
+% problem-solving skills.
+%
