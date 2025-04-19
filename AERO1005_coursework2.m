@@ -239,13 +239,15 @@ disp('End of Task 1');
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 disp('start Task 2');
 clear a
+
+% Connecting the Arduino
 try
     a = arduino('COM3', 'Uno'); 
     disp('Arduino Connection Successful');
 catch ME
     disp('Error: unable to connect to Arduino.');
     disp(ME.message)
-    return; % 
+    return; 
 end
 
 % Define pin number 
@@ -274,8 +276,47 @@ end
 disp('Task 2 ends (or is interrupted)');
 % END OF TASK 2 
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [25 MARKS]
+clear a
+disp('Commencement of Task 3');
 
-% Insert answers here
+% Connecting the Arduino
+try
+    a = arduino('COM3', 'Uno'); 
+    disp('Arduino Connection Successful');
+catch ME
+    disp('Error: unable to connect to Arduino.');
+    disp(ME.message)
+    return; 
+end
+
+
+% Define Pin Number
+analogPin     = 'A0';   
+% Select pin for rate indication
+greenPinRate  = 'D9';   
+yellowPinRate = 'D10';  
+redPinRate    = 'D11';  
+
+
+% Calling temperature prediction functions
+disp('Start temperature prediction system (press Ctrl+C to stop)...');
+try
+    temp_prediction(a, analogPin, greenPinRate, yellowPinRate, redPinRate);
+catch ME
+    disp('The prediction function is interrupted or has an error.');
+    % Make sure the LED is off
+    writeDigitalPin(a, greenPinRate, 0);
+    writeDigitalPin(a, yellowPinRate, 0);
+    writeDigitalPin(a, redPinRate, 0);
+    disp('All rate LEDs are off.');
+end
+
+% Cleanup (optional, onCleanup is usually handled within a function)
+% clear a;
+disp('Task 3 terminated (or interrupted)');
+
+% END OF TASK 3 
+
 
 
 %% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
